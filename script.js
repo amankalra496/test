@@ -3658,7 +3658,7 @@ async function downloadPDF() {
     const totalPages = window.currentPdfDoc.getPageCount();
     const pageIndicesToRemove = [];
     for (let i = 0; i < totalPages; i++) {
-      if (i % 2 === 0) { // i is 0-indexed, so i=0 is page 1 (odd), i=1 is page 2 (even)
+      if (i % 2 !== 0) { // i is 0-indexed, so i=0 is page 1 (odd), i=1 is page 2 (even)
         pageIndicesToRemove.push(i);
       }
     }
