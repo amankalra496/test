@@ -3654,6 +3654,19 @@ async function downloadPDF() {
       }
     }
 
+    // Remove odd pages (keep only even pages)
+    const totalPages = window.currentPdfDoc.getPageCount();
+    const pageIndicesToRemove = [];
+    for (let i = 0; i < totalPages; i++) {
+      if (i % 2 === 0) { // i is 0-indexed, so i=0 is page 1 (odd), i=1 is page 2 (even)
+        pageIndicesToRemove.push(i);
+      }
+    }
+    // Remove in reverse order to maintain correct indices
+    for (let i = pageIndicesToRemove.length - 1; i >= 0; i--) {
+      window.currentPdfDoc.removePage(pageIndicesToRemove[i]);
+    }
+    
     // Generate and download the PDF
     const modifiedPdfBytes = await window.currentPdfDoc.save();
     const blob = new Blob([modifiedPdfBytes], { type: "application/pdf" });
